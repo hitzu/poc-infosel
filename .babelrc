@@ -1,0 +1,29 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "@constants": "./src/constants",
+          "@classes": "./src/classes",
+          "@services": "./src/services",
+          "@interfaces": "./src/interfaces",
+          "@middlewares": "./src/middlewares"
+        }
+      }
+    ]
+  ],
+  "sourceRoot": "./src"
+}

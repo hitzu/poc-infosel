@@ -1,0 +1,7 @@
+node_modules/
+
+# Distribution build
+lib/
+
+# Dev environment variables
+.env

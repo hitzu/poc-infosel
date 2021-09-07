@@ -1,0 +1,66 @@
+{
+  "name": "commons",
+  "version": "0.0.1",
+  "description": "hitzu's micro-services common library",
+  "files": [
+    "/lib",
+    "/types",
+    "/static",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "start": "nodemon index.ts",
+    "dev": "ts-node-dev --respawn --transpileOnly --project tsconfig.json -r tsconfig-paths/register ./src/test-handler/dev.ts && npm run types",
+    "types": "ttsc --emitDeclarationOnly",
+    "build": "rm -rf lib && babel src --out-dir lib --extensions '.ts' && npm run types",
+    "prepare": "npm run test && rm -rf lib && npm run build"
+  },
+  "license": "public",
+  "dependencies": {
+    "cerealizr": "^1.0.1-alpha",
+    "crypto-js": "^4.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "google-auth-library": "^5.10.1",
+    "joi": "^17.2.1",
+    "joi-extract-type": "^15.0.8",
+    "joi-to-swagger": "^5.0.1",
+    "json-schema-ref-parser": "^7.1.4",
+    "jsonwebtoken": "^8.5.1",
+    "ip": "^1.1.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/express": "^4.17.6",
+    "@types/jest": "^25.2.2",
+    "@types/morgan": "^1.9.0",
+    "aws-sdk": "^2.738.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "husky": "^4.2.5",
+    "jest": "^25.5.4",
+    "lint-staged": "^10.2.2",
+    "prettier": "^1.19.1",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0",
+    "tslint": "^6.1.2",
+    "ttypescript": "^1.5.10",
+    "typescript": "^3.9.2",
+    "typescript-transform-paths": "^1.1.14",
+    "nodemon": "^1.12.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run test"
+    }
+  },
+  "lint-staged": {
+    "*.{ts}": "tslint --fix",
+    "*.{ts,json,md}": "prettier --write"
+  }
+}
