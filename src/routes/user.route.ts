@@ -1,6 +1,7 @@
 import Express from 'express';
-import { getUser } from '../controllers/user.controller'
+import { getUser, insertUser } from '../controllers/user.controller'
 const api = Express.Router();
-api.get("/", getUser);
+api.get("/:id", getUser);
+api.post("/", insertUser);
 
 export default api;
