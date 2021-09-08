@@ -2,7 +2,7 @@ import { Document, Model } from 'mongoose';
 
 export interface IPerson {
   firstName: string;
-  lastName?: string;
+  lastName: string;
   phone: number;
   rfc: string;
   address: string;
@@ -11,7 +11,7 @@ export interface IPerson {
 }
 
 export interface IPersonDocument extends IPerson, Document {
-  findByIdLean: (personId : string) => Promise<IPersonDocument>
+  setLastUpdated: (this: IPersonDocument) => Promise<void>;
 }
 
 export interface IPersonModel extends Model<IPersonDocument> {
