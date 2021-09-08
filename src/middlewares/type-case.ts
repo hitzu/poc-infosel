@@ -21,21 +21,12 @@ export const typeCase = (typeCase: TypeCase): RequestHandler => {
   }
 
   return (req: Request, res: Response, next: NextFunction) => {
-    const expressJson: Send = res.json;
-
     // Request
     if (serializer !== null) {
       req.query = serializer.serialize(req.query);
       req.params = serializer.serialize(req.params);
       req.body = serializer.serialize(req.body);
     }
-
-    res.json = function(body): Response {
-      const serializedBody =
-        serializer !== null ? serializer.serialize(body) : body;
-
-      return expressJson.call(this, serializedBody);
-    };
 
     next();
   };
