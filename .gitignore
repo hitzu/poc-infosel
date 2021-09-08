@@ -4,4 +4,5 @@ node_modules/
 lib/
 
 # Dev environment variables
+.env.dev
 .env

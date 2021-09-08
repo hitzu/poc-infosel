@@ -18,17 +18,20 @@
   },
   "license": "public",
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "cerealizr": "^1.0.1-alpha",
     "crypto-js": "^4.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "google-auth-library": "^5.10.1",
+    "ip": "^1.1.5",
     "joi": "^17.2.1",
     "joi-extract-type": "^15.0.8",
     "joi-to-swagger": "^5.0.1",
     "json-schema-ref-parser": "^7.1.4",
     "jsonwebtoken": "^8.5.1",
-    "ip": "^1.1.5"
+    "custom-env": "^2.0.1",
+    "mongoose": "^5.10.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
