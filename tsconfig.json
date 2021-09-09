@@ -23,6 +23,6 @@
       }
     ]
   },
-  "include": ["src/**/*", "types/*", "index.ts"],
+  "include": ["src/**/*", "types/*", "index.ts", "types/express/index.d.ts"],
   "exclude": ["node_modules", "lib"]
 }

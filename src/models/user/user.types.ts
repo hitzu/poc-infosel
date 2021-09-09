@@ -1,5 +1,5 @@
 import { Document, Model } from 'mongoose';
-
+import {IPersonDocument} from "../person/person.types"
 export interface IUser {
   username: string;
   password: string;
@@ -11,6 +11,7 @@ export interface IUser {
 }
 
 export interface IUserDocument extends IUser, Document {
+  personId: IPersonDocument
   setLastUpdated: (this: IUserDocument) => Promise<void>;
 }
 

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { RequestCustom } from "../interfaces/start-options.interface"
 import PersonModel from "../models/person/person.model";
 import UserModel from "../models/user/user.model";
 import {IPerson} from "../models/person/person.types";
@@ -9,8 +10,7 @@ const getUser = async (req: Request, res: Response) : Promise<void> => {
     try {
         res.status(200).send(await UserModel.findByIdLean(req.params.id));
     } catch (error) {
-        console.log(error);
-        res.status(500).send({hola : error});
+        res.status(500).send({error:error.message})
     }
 }
 
@@ -26,26 +26,23 @@ const insertUser = async (req: Request, res: Response) : Promise<void> => {
         console.log(UserCreated);
         res.status(200).send(await UserModel.findByIdLean(UserCreated._id));
     } catch (error) {
-        res.status(500).send({hola : error});
+        res.status(500).send({error:error.message})
     }
 }
 
-const updateInfoUser = async (req: Request, res: Response) : Promise<void> => {
+const updateInfoUser = async (req: RequestCustom, res: Response) : Promise<void> => {
     try {
-        const {person_id, phone, address} = req.body.person;
+        const {person_id} = req.thor
+        const {phone, address} = req.body.person;
         const personCreated = await PersonModel.findByIdAndUpdate(person_id, {$set:{phone, address}}, {new: true});
         if (!personCreated) {
             res.status(500).send({error: 'person not found'});
         } else {
             const userFound = await UserModel.findOne({personId : personCreated._id})
-            console.log(userFound._id);
             res.status(200).send(await UserModel.findByIdLean(userFound._id));
         }
-        
-        
     } catch (error) {
-        console.log(error.message);
-        res.status(500).send({hola : error});
+        res.status(500).send({error:error.message})
     }
 }
 
