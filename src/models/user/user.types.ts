@@ -1,5 +1,6 @@
 import { Document, Model } from 'mongoose';
 import {IPersonDocument} from "../person/person.types"
+import {IAccountDocument} from "../account/account.types"
 export interface IUser {
   username: string;
   password: string;
@@ -12,6 +13,7 @@ export interface IUser {
 
 export interface IUserDocument extends IUser, Document {
   personId: IPersonDocument
+  accounts : IAccountDocument[]
   setLastUpdated: (this: IUserDocument) => Promise<void>;
 }
 

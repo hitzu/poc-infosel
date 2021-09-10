@@ -2,8 +2,10 @@ import { Request, Response } from 'express';
 import { RequestCustom } from "../interfaces/start-options.interface"
 import PersonModel from "../models/person/person.model";
 import UserModel from "../models/user/user.model";
+import AccountModel from "../models/account/account.model";
 import {IPerson} from "../models/person/person.types";
 import {IUser} from "../models/user/user.types";
+import {IAccount, IAccountDocument} from "../models/account/account.types";
 
 
 const getUser = async (req: Request, res: Response) : Promise<void> => {
@@ -17,14 +19,40 @@ const getUser = async (req: Request, res: Response) : Promise<void> => {
 const insertUser = async (req: Request, res: Response) : Promise<void> => {
     try {
         const person : IPerson = {...req.body.person};
-        const personCreated = await PersonModel.create(person);
-        const user : IUser = {
-            ...req.body.user,
-            personId: personCreated.id,
-        }
-        const UserCreated = await new UserModel(user).save();
-        console.log(UserCreated);
-        res.status(200).send(await UserModel.findByIdLean(UserCreated._id));
+        PersonModel.create(person, (error, personCreated) => {
+            if (error) {
+                res.status(500).send({error:error.message})
+            } else {
+                const user : IUser = {
+                    ...req.body.user,
+                    personId: personCreated._id,
+                }
+                UserModel.create(user, async (error, userCreated) => {
+                    console.log(error);
+                    if (error) {
+                        console.log('se aprovecha los callbacks para hacer rollback', personCreated);
+                        await PersonModel.findOneAndRemove({_id : personCreated._id})
+                        res.status(500).send({error:error.message})
+                    } else {
+                        console.log('entro aunque haya fallado?');
+                        const account: IAccountDocument = {...req.body.acount};
+                        account.account_number = (await AccountModel.find({})).length + 1;
+                        account.personId = personCreated._id
+                        AccountModel.create(account, async (error, accountCreated) => {
+                            if (error) {
+                                console.log('se aprovecha los callbacks para hacer rollback');
+                                await PersonModel.findOneAndRemove({_id : personCreated._id})
+                                await UserModel.findOneAndRemove({_id :userCreated._id})
+                                res.status(500).send({error:error.message})
+                            } else {
+                                res.status(200).send(await UserModel.findByIdLean(userCreated._id));
+                            }
+                        })
+                           
+                    }
+                })
+            }
+        });
     } catch (error) {
         res.status(500).send({error:error.message})
     }

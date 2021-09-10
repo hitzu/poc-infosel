@@ -4,7 +4,10 @@ import { setLastUpdated } from "./user.methods"
 import Person from "../person/person.model"
 
 const UserSchema = new Schema({
-  username: String,
+  username: {
+    type: String,
+    unique: true,
+  },
   password: String,
   token: String,
   loginDate: {
