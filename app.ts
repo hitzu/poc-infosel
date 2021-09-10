@@ -4,6 +4,7 @@ import requestIp from 'request-ip';
 import Express, { Application } from 'express';
 import userRouter from "./src/routes/user.route";
 import loginRouter from "./src/routes/login.route";
+import transactionRouter from "./src/routes/transactions.route"
 import { errorHandler } from './src/middlewares/error-handler';
 
 const app: Application = Express();
@@ -15,6 +16,7 @@ app.use(typeCase('snake'));
 app.use(requestIp.mw());
 app.use("/auth", loginRouter);
 app.use("/user", userRouter);
+app.use("/transaction", transactionRouter)
 
 app.use(errorHandler);
 
