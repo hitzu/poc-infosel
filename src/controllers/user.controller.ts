@@ -5,7 +5,7 @@ import UserModel from "../models/user/user.model";
 import AccountModel from "../models/account/account.model";
 import {IPerson} from "../models/person/person.types";
 import {IUser} from "../models/user/user.types";
-import {IAccount, IAccountDocument} from "../models/account/account.types";
+import {IAccountDocument} from "../models/account/account.types";
 
 
 const getUser = async (req: Request, res: Response) : Promise<void> => {
@@ -74,8 +74,20 @@ const updateInfoUser = async (req: RequestCustom, res: Response) : Promise<void>
     }
 }
 
+const enableDisableUser = async (req: RequestCustom, res: Response) : Promise<void> => {
+    try {
+        const {user_id} = req.thor;
+        const previousValue = await UserModel.findById(user_id);
+        const userUpdated = await UserModel.findByIdAndUpdate(user_id, {$set: {"status": !previousValue.status}})
+        res.status(200).send(await UserModel.findByIdLean(userUpdated._id)); 
+    } catch (error) {
+        res.status(500).send({error:error.message})
+    }
+}
+
 export {
     getUser,
     insertUser,
-    updateInfoUser
+    updateInfoUser,
+    enableDisableUser
 }

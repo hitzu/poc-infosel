@@ -27,4 +27,6 @@ export const postUserRequestSchema = Joi.object().keys({
         product: Joi.string().required(),
         nip: Joi.string().required(),
     }),
-})
+});
+
+export const enableDisableUserSchema = Joi.object().keys({})
