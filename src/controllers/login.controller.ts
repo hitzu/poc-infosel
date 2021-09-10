@@ -1,6 +1,10 @@
 import { Request, Response } from 'express';
 import UserModel from "../models/user/user.model"
 import { generate  } from "../services/token"
+import {
+    loginResponseSchema
+} from "../schemas";
+import { validate } from "../services/validation"
 
 const logIn = async (req: Request, res: Response) => {
     try {
@@ -11,7 +15,9 @@ const logIn = async (req: Request, res: Response) => {
         } else {
             const userWithPerson = await UserModel.findByIdLean(userFound._id)
             const token = await generate(userWithPerson._id, userWithPerson.username, userWithPerson.status, userWithPerson.personId._id, req.clientIp);
-            res.status(200).send({ userData: userWithPerson, token: token});
+            const finalResponse = { userData: userWithPerson, token: token}
+            await validate(finalResponse, loginResponseSchema)
+            res.status(200).send(finalResponse);
         }
     } catch (error) {
         res.status(500).send({error:error.message})

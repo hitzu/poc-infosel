@@ -5,12 +5,17 @@ import UserModel from "../models/user/user.model";
 import AccountModel from "../models/account/account.model";
 import {IPerson} from "../models/person/person.types";
 import {IUser} from "../models/user/user.types";
+import { validate } from "../services/validation"
 import {IAccountDocument} from "../models/account/account.types";
-
+import {
+    userResponseSchema
+} from "../schemas";
 
 const getUser = async (req: Request, res: Response) : Promise<void> => {
     try {
-        res.status(200).send(await UserModel.findByIdLean(req.params.id));
+        const finalResponse = await UserModel.findByIdLean(req.params.id)
+        await validate(finalResponse, userResponseSchema)
+        res.status(200).send(finalResponse);
     } catch (error) {
         res.status(500).send({error:error.message})
     }
@@ -43,7 +48,9 @@ const insertUser = async (req: Request, res: Response) : Promise<void> => {
                                 await UserModel.findOneAndRemove({_id :userCreated._id})
                                 res.status(500).send({error:error.message})
                             } else {
-                                res.status(200).send(await UserModel.findByIdLean(userCreated._id));
+                                const finalResponse = await UserModel.findByIdLean(userCreated._id)
+                                await validate(finalResponse, userResponseSchema);
+                                res.status(200).send(finalResponse);
                             }
                         })
                            
@@ -65,7 +72,9 @@ const updateInfoUser = async (req: RequestCustom, res: Response) : Promise<void>
             res.status(500).send({error: 'person not found'});
         } else {
             const userFound = await UserModel.findOne({personId : personCreated._id})
-            res.status(200).send(await UserModel.findByIdLean(userFound._id));
+            const finalResponse = await UserModel.findByIdLean(userFound._id)
+            await validate(finalResponse, userResponseSchema);
+            res.status(200).send(finalResponse);
         }
     } catch (error) {
         res.status(500).send({error:error.message})
@@ -77,7 +86,9 @@ const enableDisableUser = async (req: RequestCustom, res: Response) : Promise<vo
         const {user_id} = req.thor;
         const previousValue = await UserModel.findById(user_id);
         const userUpdated = await UserModel.findByIdAndUpdate(user_id, {$set: {"status": !previousValue.status}})
-        res.status(200).send(await UserModel.findByIdLean(userUpdated._id)); 
+        const finalResponse = await UserModel.findByIdLean(userUpdated._id)
+        await validate(finalResponse, userResponseSchema);
+        res.status(200).send(finalResponse);
     } catch (error) {
         res.status(500).send({error:error.message})
     }

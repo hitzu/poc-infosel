@@ -4,7 +4,7 @@ import { findByIdLean } from "./person.statics"
 const PersonSchema = new Schema({
     firstName: String,
     lastName: String,
-    phone: Number,
+    phone: String,
     rfc: { 
       type: String, 
       unique: true 
