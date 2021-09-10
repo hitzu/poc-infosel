@@ -9,6 +9,11 @@ const TransactionSchema = new Schema({
     ref: User,
     required: true 
   },
+  personId : { 
+    type: Schema.Types.ObjectId, 
+    ref: User,
+    required: true 
+  },
   receivedAccount: {
     type: Schema.Types.ObjectId, 
     ref: account,

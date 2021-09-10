@@ -5,7 +5,6 @@ export const validateSchema = (schema, payload) => (
   _: Response,
   next: NextFunction
 ) => {
-  console.log(req[payload]);
   const { error } = schema.validate(req[payload]);
   if (error) {
     throw error;
