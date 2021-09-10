@@ -12,7 +12,7 @@ const app: Application = Express();
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json({ limit: '50mb' }));
 app.use(corsHandler());
-app.use(typeCase('snake'));
+app.use(typeCase('camel'));
 app.use(requestIp.mw());
 app.use("/auth", loginRouter);
 app.use("/user", userRouter);

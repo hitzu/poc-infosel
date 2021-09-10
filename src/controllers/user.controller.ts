@@ -28,13 +28,11 @@ const insertUser = async (req: Request, res: Response) : Promise<void> => {
                     personId: personCreated._id,
                 }
                 UserModel.create(user, async (error, userCreated) => {
-                    console.log(error);
                     if (error) {
-                        console.log('se aprovecha los callbacks para hacer rollback', personCreated);
+                        console.log('se aprovecha los callbacks para hacer rollback');
                         await PersonModel.findOneAndRemove({_id : personCreated._id})
                         res.status(500).send({error:error.message})
                     } else {
-                        console.log('entro aunque haya fallado?');
                         const account: IAccountDocument = {...req.body.acount};
                         account.account_number = (await AccountModel.find({})).length + 1;
                         account.personId = personCreated._id
