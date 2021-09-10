@@ -6,3 +6,4 @@ lib/
 # Dev environment variables
 .env.dev
 .env
+.env.test

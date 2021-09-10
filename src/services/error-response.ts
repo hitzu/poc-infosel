@@ -17,17 +17,6 @@ export const errorResponse = (error): GeneralError => {
   }
 
   if (error instanceof ValidationError) {
-    if (process.env.MODULE_NAME === 'financing') {
-      code = HTTP_CODES.UnprocessableEntity;
-      message = 'Validation Error - Bad input Schema';
-      error.message = String(
-        error.details[0] ? error.details[0].message : error.details
-      );
-    } else {
-      code = HTTP_CODES.BadRequest;
-      message = 'Validation error';
-    }
-  } else {
     code = HTTP_CODES.ServerError;
     message = 'Internal Server Error';
   }
