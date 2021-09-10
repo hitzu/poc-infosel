@@ -6,7 +6,7 @@ export async function findByIdLean(
   userId: string
 ): Promise<IUserDocument> {
   try { 
-    const userWithperson = await this.findById(Types.ObjectId(userId))
+    const userWithperson = await this.findById(Types.ObjectId(userId), "-password")
     .populate({
       path: 'personId',
       options: { lean: true}
