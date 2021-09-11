@@ -6,7 +6,6 @@ import { validate } from '../services/validation';
 
 const logIn = async (req: Request, res: Response) => {
   try {
-    console.log('entro aqui? jejeje');
     const { username, password } = req.body;
     const userFound = await UserModel.findOne({
       username: username,
@@ -17,13 +16,6 @@ const logIn = async (req: Request, res: Response) => {
       throw new Error('user not found');
     } else {
       const userWithPerson = await UserModel.findByIdLean(userFound._id);
-      console.log(
-        userWithPerson._id,
-        userWithPerson.username,
-        userWithPerson.status,
-        userWithPerson.personId._id,
-        req.clientIp
-      );
       const token = await generate(
         userWithPerson._id,
         userWithPerson.username,

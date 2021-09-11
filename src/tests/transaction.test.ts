@@ -22,18 +22,32 @@ test('POST /auth/login', async () => {
   };
 
   conection();
+
+  const token = await generate(
+    '613ad150454eb932c1b50cf3',
+    'ales',
+    true,
+    '613ad150454eb932c1b50cf1',
+    '192.168.10'
+  );
+
   supertest(app)
-    .post('/auth/login')
+    .post('/transaction/deposit')
     .send({
-      username: 'ales',
-      password: 'Ro250693'
+      receivedAccount: '613ad151454eb932c1b50cf6',
+      movementype: 'Abono',
+      amount: 2000,
+      concept: 'pago mensualidad',
+      reference: 'AF123412',
+      operation: 'SPEI',
+      status: 'Aprobado'
     })
     .set('Accept', /json/)
+    .set({ Authorization: token })
     .expect('Content-Type', /json/)
     .expect(200)
     .then(response => {
       console.log(response.body);
     });
-
   expect(true).toBe(true);
 });

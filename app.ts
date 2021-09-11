@@ -8,7 +8,6 @@ import transactionRouter from './src/routes/transactions.route';
 import { errorHandler } from './src/middlewares/error-handler';
 
 const app: Application = Express();
-
 app.use(Express.urlencoded({ extended: true }));
 app.use(Express.json({ limit: '50mb' }));
 app.use(corsHandler());
