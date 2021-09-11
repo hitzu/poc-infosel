@@ -33,7 +33,8 @@
     "json-schema-ref-parser": "^7.1.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "5.13.6",
-    "request-ip": "^2.1.3"
+    "request-ip": "^2.1.3",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

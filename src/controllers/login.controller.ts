@@ -4,6 +4,28 @@ import { generate } from '../services/token';
 import { loginResponseSchema } from '../schemas';
 import { validate } from '../services/validation';
 
+export const swLogInFunction = {
+  summary: 'nos permite logearnos en la app',
+  tags: ['auth'],
+  responses: {
+    '200': {
+      description: 'objeto con la informacion del usuario y el token'
+    }
+  },
+  parameters: [
+    {
+      in: 'body',
+      name: 'username',
+      require: true
+    },
+    {
+      in: 'body',
+      name: 'password',
+      require: true
+    }
+  ]
+};
+
 const logIn = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;

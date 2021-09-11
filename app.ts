@@ -6,6 +6,8 @@ import userRouter from './src/routes/user.route';
 import loginRouter from './src/routes/login.route';
 import transactionRouter from './src/routes/transactions.route';
 import { errorHandler } from './src/middlewares/error-handler';
+import swaggerUI from 'swagger-ui-express';
+import { swDocument } from './swagger.def';
 
 const app: Application = Express();
 app.use(Express.urlencoded({ extended: true }));
@@ -13,6 +15,7 @@ app.use(Express.json({ limit: '50mb' }));
 app.use(corsHandler());
 app.use(typeCase('camel'));
 app.use(requestIp.mw());
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swDocument));
 app.use('/auth', loginRouter);
 app.use('/user', userRouter);
 app.use('/transaction', transactionRouter);

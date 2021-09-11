@@ -1,10 +1,17 @@
 import Express from 'express';
-import { logIn,  } from '../controllers/login.controller'
+import { logIn, swLogInFunction } from '../controllers/login.controller';
 const api = Express.Router();
 import { validateSchema } from '../middlewares/validate-input-schema';
-import {loginResquestSchema} from "../schemas/index"
+import { loginResquestSchema } from '../schemas/index';
 
+export const swLoginRouter = {
+  '/auth/login': {
+    post: {
+      ...swLogInFunction
+    }
+  }
+};
 
-api.post("/login", validateSchema(loginResquestSchema, 'body'), logIn);
+api.post('/login', validateSchema(loginResquestSchema, 'body'), logIn);
 
 export default api;
