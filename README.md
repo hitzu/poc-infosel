@@ -15,7 +15,7 @@ git clone https://github.com/hitzu/poc-infosel.git
 git checkout dev
 ```
 
-Mira [Deployment](#Despliegue) para conocer como desplegar el proyecto.
+Agregar en la raiz del proyecto los archivos de enviroment que fueron proporcionados via correo electronico.
 
 ### Pre-requisitos 📋
 
