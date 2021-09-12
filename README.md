@@ -143,6 +143,10 @@ header[authorization] : token
 }
 ```
 
+## Documentacion 📖
+
+Con el servidor levantado podras visitar la pagina /api-docs/ para visualizar la documentación
+
 ## Ejecutando las pruebas ⚙️
 
 Usando los scripts que tenemos en el archivo packaje.json levantamos el proyecto con:
